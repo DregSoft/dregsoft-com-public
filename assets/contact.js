@@ -1,13 +1,25 @@
-// Make "Contact us" clickable without putting the real address in the page source:
-// the mailto: link is only assembled from its separate parts when a visitor clicks.
+// Make "Contact us" usable without putting the real address in the page source:
+// the address is only assembled from its separate parts when a visitor clicks.
+// A click opens their mail app AND shows the address (copied if allowed), so it
+// still works when no mail client is configured.
 document.querySelectorAll('.item[data-user]').forEach(function (el) {
-  var link = document.createElement('a');
-  link.className = 'item is-link';
-  link.href = '#';
-  link.textContent = el.textContent;
-  link.addEventListener('click', function (e) {
-    e.preventDefault();
-    window.location.href = 'mailto:' + el.dataset.user + '@' + el.dataset.domain;
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'item is-link';
+  btn.textContent = el.textContent;
+  var out = document.createElement('span');
+  out.className = 'item contact-out';
+  out.setAttribute('role', 'status');
+  btn.addEventListener('click', function () {
+    var addr = el.dataset.user + '@' + el.dataset.domain;
+    out.textContent = addr;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(addr).then(function () {
+        out.textContent = addr + ' (copied)';
+      }, function () {});
+    }
+    window.location.href = 'mailto:' + addr;
   });
-  el.replaceWith(link);
+  el.replaceWith(btn);
+  btn.after(out);
 });
