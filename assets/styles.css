@@ -46,25 +46,32 @@ section { padding: 100px 0; }
 
 /* Shared: gold divider and text links (home page + bottom of projects page) */
 .rule { width: 48px; height: 1px; background: var(--brass); margin: 48px auto 36px; }
-.links { display: flex; flex-direction: column; align-items: center; gap: 16px; font-size: 1rem; text-align: center; }
+.links { display: flex; flex-direction: column; align-items: center; gap: 24px; font-size: 1rem; text-align: center; }
 .links a, .links span { text-decoration: none; letter-spacing: .02em; }
 .item { color: var(--ink); }
-button.item { background: none; border: 0; border-bottom: 1px solid var(--line); font: inherit; letter-spacing: .02em; cursor: pointer; padding: 0 0 2px; }
-.contact-out { font-size: .95rem; color: var(--ink-soft); }
-.contact-out:empty { display: none; }
+button.item { background: none; border: 0; font: inherit; letter-spacing: .02em; cursor: pointer; padding: 0 0 2px; }
+/* The address line keeps its space so nothing moves when it appears */
+.contact-out { font-size: .95rem; color: var(--ink-soft); min-height: 1.65em; }
+.tagline-note { margin: 8px 0 0; color: var(--ink-soft); font-size: .9rem; }
 .tagline { margin: 28px 0 0; color: var(--ink-soft); font-size: 1.05rem; text-wrap: balance; }
-.item.is-link { border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: border-color .2s; }
+/* Underline reads as a link at rest; the ::after widens the touch target to 44px without moving the underline */
+.item.is-link { position: relative; border-bottom: 1px solid var(--ink-soft); padding-bottom: 2px; transition: border-color .2s; }
+.item.is-link::after, .page-head a.back::after { content: ""; position: absolute; inset: -12px -10px; }
 .item.is-link:hover { border-color: var(--brass); }
-.page-contact { padding-bottom: 72px; }
-.page-contact .rule { margin-top: 0; }
+.page-contact { padding-bottom: 48px; }
+.page-contact .rule { margin: 0 auto 28px; }
+.page-contact .links { gap: 8px; }
+main > section { padding-bottom: 56px; }
 
-/* Hexagon outline: pinned to the window so it sits in the same place on every page */
+/* Hexagon outline: home page only, pinned to the window */
 .hero-mark { position: fixed; right: -60px; top: 50%; transform: translateY(-50%); width: 440px; height: auto; opacity: .09; pointer-events: none; z-index: -1; }
 
 /* Projects */
 .page-head { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
 .page-head img { width: 260px; height: auto; }
-.page-head a.back { font-size: .78rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--brass-text); text-decoration: none; }
+.page-head a.back { position: relative; font-size: .78rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--brass-text); text-decoration: none; }
+.list-note { margin: -24px 0 32px; color: var(--ink-soft); }
+.project .status { align-self: flex-start; margin: 0 0 14px; font-size: .7rem; letter-spacing: .08em; }
 .page-title { line-height: 1.15; font-weight: 600; font-size: clamp(2rem, 4.5vw, 2.6rem); margin: 0 0 40px; letter-spacing: -.02em; }
 .projects-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 24px; }
 .project { background: var(--paper-raised); border: 1px solid var(--line); padding: 28px; }
@@ -77,6 +84,23 @@ button.item { background: none; border: 0; border-bottom: 1px solid var(--line);
 
 /* Project landing pages */
 
+/* Running text (about page) */
+.prose { max-width: 62ch; }
+.prose p { margin: 0 0 20px; color: var(--ink-soft); font-size: 1.05rem; text-wrap: pretty; }
+.prose .signoff { margin: 36px 0 0; color: var(--ink); font-size: 1.05rem; font-weight: 600; }
+.prose a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--ink-soft); }
+.prose a:hover { text-decoration-color: var(--brass); }
+
+/* In/out plate: what goes in, what comes out */
+.plate { display: grid; grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr); align-items: start; gap: 20px; margin: 0 0 56px; max-width: 760px; background: var(--paper-raised); border: 1px solid var(--line); padding: 20px 24px; }
+.plate dl { margin: 0; }
+.plate dt { font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--brass-text); }
+.plate dd { margin: 4px 0 0; color: var(--ink); }
+.plate svg { width: 40px; height: 12px; margin-top: 30px; stroke: var(--brass); fill: none; stroke-width: 1.5; }
+@media (max-width: 600px) {
+  .plate { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .plate svg { transform: rotate(90deg); width: 32px; height: 12px; margin: 0 auto; }
+}
 .project-hero { max-width: 760px; margin-bottom: 56px; }
 .project-hero .page-title { margin-bottom: 16px; }
 .status { display: inline-block; font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--brass-text); border: 1px solid var(--brass); padding: 4px 10px; margin: 0 6px 20px 0; }
@@ -96,7 +120,6 @@ button.item { background: none; border: 0; border-bottom: 1px solid var(--line);
 @media (max-width: 860px) {
   .detail-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
 }
-.empty { color: var(--ink-soft); border: 1px dashed var(--line); padding: 48px 24px; text-align: center; }
 
 /* Smaller screens: shrink the outline and tuck it further off the edge so it clears the logo */
 @media (max-width: 1200px) {

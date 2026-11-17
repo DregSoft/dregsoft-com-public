@@ -18,7 +18,8 @@ document.querySelectorAll('.item[data-user]').forEach(function (el) {
         out.textContent = addr + ' (copied)';
       }, function () {});
     }
-    window.location.href = 'mailto:' + addr;
+    var subject = el.dataset.subject ? '?subject=' + encodeURIComponent('Question about ' + el.dataset.subject) : '';
+    window.location.href = 'mailto:' + addr + subject;
   });
   el.replaceWith(btn);
   btn.after(out);
