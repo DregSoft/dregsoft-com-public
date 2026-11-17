@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Figtree";
+  src: url("fonts/figtree-latin.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --ink: #14213D;
   --ink-soft: #3A4660;
@@ -88,6 +96,7 @@ main > section { padding-bottom: 56px; }
 .prose { max-width: 62ch; }
 .prose p { margin: 0 0 20px; color: var(--ink-soft); font-size: 1.05rem; text-wrap: pretty; }
 .prose .signoff { margin: 36px 0 0; color: var(--ink); font-size: 1.05rem; font-weight: 600; }
+.signoff .contact-out { display: block; margin-top: 4px; font-weight: 400; }
 .prose a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--ink-soft); }
 .prose a:hover { text-decoration-color: var(--brass); }
 
